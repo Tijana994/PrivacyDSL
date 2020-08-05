@@ -14,4 +14,32 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="Subservices" upperBound="-1"
         eType="#//Service"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Provider" eSuperTypes="#//NamedElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Region" eSuperTypes="#//NamedElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subRegion" upperBound="-1"
+        eType="#//Region"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Principal" eSuperTypes="#//NamedElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Subprincipals" upperBound="-1"
+        eType="#//Principal"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="PrivacyStatementType"/>
+  <eClassifiers xsi:type="ecore:EEnum" name="DataType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Location" eSuperTypes="#//NamedElement"/>
+  <eClassifiers xsi:type="ecore:EEnum" name="ConditionType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Condition"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TimeInterval">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="intervals" upperBound="2"
+        eType="#//TimeStatement"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TimeStatement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="DateTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Proposal" eType="#//TimeProposal"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="TimeProposal">
+    <eLiterals name="from"/>
+    <eLiterals name="to" value="1"/>
+    <eLiterals name="at" value="2"/>
+    <eLiterals name="until" value="3"/>
+  </eClassifiers>
 </ecore:EPackage>
