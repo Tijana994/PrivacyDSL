@@ -8,8 +8,12 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="policyStatements" upperBound="-1"
         eType="#//PolicyStatement"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="PolicyStatement" eSuperTypes="#//NamedElement"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Data" eSuperTypes="#//NamedElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PolicyStatement" eSuperTypes="#//NamedElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Type" lowerBound="1" eType="#//PrivacyStatementType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Data" eSuperTypes="#//NamedElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Type" eType="#//DataType"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Service" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="Subservices" upperBound="-1"
         eType="#//Service"/>
@@ -20,26 +24,53 @@
         eType="#//Region"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Principal" eSuperTypes="#//NamedElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="Subprincipals" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subPrincipal" upperBound="-1"
         eType="#//Principal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Type" lowerBound="1" eType="#//PrincipalType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Scope" lowerBound="1" eType="#//PrincipalScope"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="PrivacyStatementType"/>
+  <eClassifiers xsi:type="ecore:EEnum" name="PrivacyStatementType">
+    <eLiterals name="Permission"/>
+    <eLiterals name="Obligation" value="1"/>
+    <eLiterals name="Information" value="2" literal="Information"/>
+    <eLiterals name="Optional" value="3"/>
+    <eLiterals name="Prohibition" value="4"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="DataType"/>
   <eClassifiers xsi:type="ecore:EClass" name="Location" eSuperTypes="#//NamedElement"/>
-  <eClassifiers xsi:type="ecore:EEnum" name="ConditionType"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Condition"/>
+  <eClassifiers xsi:type="ecore:EEnum" name="ConditionType">
+    <eLiterals name="Temporal"/>
+    <eLiterals name="Local" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Condition">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Type" lowerBound="1" eType="#//ConditionType"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TimeInterval">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="intervals" upperBound="2"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="intervals" upperBound="-1"
         eType="#//TimeStatement"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TimeStatement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="DateTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Proposal" eType="#//TimeProposal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Preposition" lowerBound="1"
+        eType="#//TimePreposition"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="TimeProposal">
+  <eClassifiers xsi:type="ecore:EEnum" name="TimePreposition">
     <eLiterals name="from"/>
     <eLiterals name="to" value="1"/>
     <eLiterals name="at" value="2"/>
     <eLiterals name="until" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="PrincipalType">
+    <eLiterals name="Organization"/>
+    <eLiterals name="Group" value="1"/>
+    <eLiterals name="Individual" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Action" eSuperTypes="#//NamedElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="PrincipalScope">
+    <eLiterals name="In"/>
+    <eLiterals name="Out" value="1"/>
+    <eLiterals name="Unknown" value="2"/>
   </eClassifiers>
 </ecore:EPackage>
