@@ -10,7 +10,6 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PolicyStatement" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Type" lowerBound="1" eType="#//PrivacyStatementType"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Why" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Data" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Type" eType="#//DataType"/>
@@ -23,6 +22,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="Region" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="subRegion" upperBound="-1"
         eType="#//Region" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="EUAffiliation" eType="#//EUAffiliation"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Principal" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="subPrincipal" upperBound="-1"
@@ -38,7 +38,8 @@
     <eLiterals name="Prohibition" value="4"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="DataType">
-    <eLiterals name="Personal"/>
+    <eLiterals name="Biometric" literal="Biometric"/>
+    <eLiterals name="General" value="1"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Location" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="SubLocations" upperBound="-1"
@@ -75,12 +76,42 @@
     <eLiterals name="Group" value="1"/>
     <eLiterals name="Individual" value="2"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Action" eSuperTypes="#//NamedElement">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Action">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Action" eType="#//ActionType"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="PrincipalScope">
     <eLiterals name="In"/>
     <eLiterals name="Out" value="1"/>
     <eLiterals name="Unknown" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ActionType">
+    <eLiterals name="Store"/>
+    <eLiterals name="Access" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="EUAffiliation">
+    <eLiterals name="Member" literal="Member"/>
+    <eLiterals name="Candidate" value="1"/>
+    <eLiterals name="OutOfBorder" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Purpose">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ProcessingReason" eType="#//ProcessingReason"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ProcessingReasonSubtype"
+        eType="#//ProcessingReasonSubtype"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ProcessingReason">
+    <eLiterals name="Research"/>
+    <eLiterals name="PublicHealth" value="1"/>
+    <eLiterals name="OutOfScope" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ProcessingReasonSubtype">
+    <eLiterals name="Prevention"/>
+    <eLiterals name="Investigation" value="1"/>
+    <eLiterals name="Detection" value="2"/>
+    <eLiterals name="Prosecution" value="3"/>
+    <eLiterals name="PreventionOfThreats" value="4"/>
+    <eLiterals name="OutOfEU" value="5"/>
+    <eLiterals name="PersonalActivity" value="6"/>
+    <eLiterals name="SpecialScopeOfActivity" value="7"/>
   </eClassifiers>
 </ecore:EPackage>
