@@ -40,6 +40,11 @@
   <eClassifiers xsi:type="ecore:EEnum" name="DataType">
     <eLiterals name="Biometric" literal="Biometric"/>
     <eLiterals name="General" value="1"/>
+    <eLiterals name="Genetic" value="2"/>
+    <eLiterals name="PoliticalOpinion" value="3"/>
+    <eLiterals name="RacialEthnicOrigin" value="4"/>
+    <eLiterals name="Beliefs" value="5"/>
+    <eLiterals name="SexLife" value="6"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Location" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="SubLocations" upperBound="-1"
@@ -49,10 +54,12 @@
     <eLiterals name="Duration"/>
     <eLiterals name="Local" value="1"/>
     <eLiterals name="Age" value="2"/>
+    <eLiterals name="ExplicitConsent" value="3"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Condition">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Type" lowerBound="1" eType="#//ConditionType"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaClass"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TimeInterval">
     <eStructuralFeatures xsi:type="ecore:EReference" name="intervals" upperBound="-1"
@@ -87,6 +94,7 @@
   <eClassifiers xsi:type="ecore:EEnum" name="ActionType">
     <eLiterals name="Store"/>
     <eLiterals name="Access" value="1"/>
+    <eLiterals name="Collecting" value="2"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="EUAffiliation">
     <eLiterals name="Member" literal="Member"/>
@@ -95,6 +103,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Purpose">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Method" eType="#//ProcessingMethod"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="ProcessingReason" eType="#//ProcessingReason"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="ProcessingReasonSubtype"
         eType="#//ProcessingReasonSubtype"/>
@@ -103,6 +112,9 @@
     <eLiterals name="Research"/>
     <eLiterals name="PublicHealth" value="1"/>
     <eLiterals name="OutOfScope" value="2"/>
+    <eLiterals name="PublicInterest" value="3"/>
+    <eLiterals name="StatisticalPuposes" value="4"/>
+    <eLiterals name="ExercisingSpecificRights" value="5"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="ProcessingReasonSubtype">
     <eLiterals name="Prevention"/>
@@ -113,5 +125,13 @@
     <eLiterals name="OutOfEU" value="5"/>
     <eLiterals name="PersonalActivity" value="6"/>
     <eLiterals name="SpecialScopeOfActivity" value="7"/>
+    <eLiterals name="Employment" value="8"/>
+    <eLiterals name="SocialSecurity" value="9"/>
+    <eLiterals name="SocialProtection" value="10"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ProcessingMethod">
+    <eLiterals name="OriginalData"/>
+    <eLiterals name="Encryption" value="1"/>
+    <eLiterals name="Pseudonymisation" value="2"/>
   </eClassifiers>
 </ecore:EPackage>
