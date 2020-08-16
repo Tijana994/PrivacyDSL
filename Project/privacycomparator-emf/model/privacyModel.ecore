@@ -7,28 +7,65 @@
   <eClassifiers xsi:type="ecore:EClass" name="PrivacyPolicy" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="policyStatements" upperBound="-1"
         eType="#//PolicyStatement" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="owner" eType="#//Principal"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="allData" upperBound="-1"
+        eType="#//Data" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="allPrincipals" upperBound="-1"
+        eType="#//Principal" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="regions" upperBound="-1"
+        eType="#//Region" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="providers" upperBound="-1"
+        eType="#//Provider" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="services" upperBound="-1"
+        eType="#//Service" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PolicyStatement" eSuperTypes="#//NamedElement">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Type" lowerBound="1" eType="#//PrivacyStatementType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="EReference0" eType="#//Data"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//PrivacyStatementType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="when" eType="#//TimeInterval"
+        containment="true">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="name" value="when"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="who" eType="#//Principal"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="why" eType="#//Purpose"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="from" eType="#//Region"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="where" eType="#//Region"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="what" eType="#//What" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="how" upperBound="-1" eType="#//Restriction"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="causes" upperBound="-1"
+        eType="#//Cause"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Data" eSuperTypes="#//NamedElement">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Type" eType="#//DataType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//DataType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="restrictions" eType="#//DataCondition"
+        eKeys="#//DataCondition/key">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="attribute"/>
+        <details key="processing" value="skip"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Service" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="Subservices" upperBound="-1"
         eType="#//Service" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Provider" eSuperTypes="#//NamedElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Provider" eSuperTypes="#//NamedElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="services" upperBound="-1"
+        eType="#//Service"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="region" eType="#//Region"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Region" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="subRegion" upperBound="-1"
         eType="#//Region" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="EUAffiliation" eType="#//EUAffiliation"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Principal" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="subPrincipal" upperBound="-1"
         eType="#//Principal" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Type" lowerBound="1" eType="#//PrincipalType"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Scope" lowerBound="1" eType="#//PrincipalScope"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//PrincipalType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="scope" lowerBound="1" eType="#//PrincipalScope"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="PrivacyStatementType">
     <eLiterals name="Permission"/>
@@ -50,24 +87,26 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="SubLocations" upperBound="-1"
         eType="#//Location" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="ConditionType">
-    <eLiterals name="Duration"/>
+  <eClassifiers xsi:type="ecore:EEnum" name="RestrictionType">
+    <eLiterals name="DurationInMonths"/>
     <eLiterals name="Local" value="1"/>
     <eLiterals name="Age" value="2"/>
     <eLiterals name="ExplicitConsent" value="3"/>
+    <eLiterals name="DurationInYears" value="4"/>
+    <eLiterals name="TimeInterval" value="5"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Condition">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Type" lowerBound="1" eType="#//ConditionType"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaClass"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataOwnerScope" eType="#//ConditionScope"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataConsumerScope" eType="#//ConditionScope"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="restriction" eType="#//Restriction"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TimeInterval">
     <eStructuralFeatures xsi:type="ecore:EReference" name="intervals" upperBound="-1"
         eType="#//TimeStatement" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TimeStatement">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="DateTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Preposition" lowerBound="1"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dateTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="preposition" lowerBound="1"
         eType="#//TimePreposition"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="TimePreposition">
@@ -83,15 +122,12 @@
     <eLiterals name="Group" value="1"/>
     <eLiterals name="Individual" value="2"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Action">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Action" eType="#//ActionType"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="PrincipalScope">
     <eLiterals name="In"/>
     <eLiterals name="Out" value="1"/>
     <eLiterals name="Unknown" value="2"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="ActionType">
+  <eClassifiers xsi:type="ecore:EEnum" name="Action">
     <eLiterals name="Store"/>
     <eLiterals name="Access" value="1"/>
     <eLiterals name="Collecting" value="2"/>
@@ -102,11 +138,12 @@
     <eLiterals name="OutOfBorder" value="2"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Purpose">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Method" eType="#//ProcessingMethod"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ProcessingReason" eType="#//ProcessingReason"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ProcessingReasonSubtype"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="method" eType="#//ProcessingMethod"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="processingReason" eType="#//ProcessingReason"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="processingReasonSubtype"
         eType="#//ProcessingReasonSubtype"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subPurpose" upperBound="-1"
+        eType="#//Purpose" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="ProcessingReason">
     <eLiterals name="Research"/>
@@ -134,4 +171,30 @@
     <eLiterals name="Encryption" value="1"/>
     <eLiterals name="Pseudonymisation" value="2"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Country" eSuperTypes="#//Region">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="eUAffiliation" eType="#//EUAffiliation"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="What">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="actions" upperBound="-1"
+        eType="#//Action"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="providers" upperBound="-1"
+        eType="#//Provider"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="datas" upperBound="-1"
+        eType="#//Data"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ConditionScope">
+    <eLiterals name="In"/>
+    <eLiterals name="Out" value="1"/>
+    <eLiterals name="Nevermind" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DataCondition">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="#//Action"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" upperBound="-1"
+        eType="#//Condition"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Restriction">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="restrictionType" eType="#//RestrictionType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaClass"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Cause" eSuperTypes="#//What"/>
 </ecore:EPackage>
