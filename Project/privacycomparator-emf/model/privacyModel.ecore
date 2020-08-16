@@ -37,6 +37,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="how" upperBound="-1" eType="#//Restriction"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="causes" upperBound="-1"
         eType="#//Cause"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="whose" eType="#//Principal"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Data" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//DataType"/>
@@ -185,7 +186,7 @@
   <eClassifiers xsi:type="ecore:EEnum" name="ConditionScope">
     <eLiterals name="In"/>
     <eLiterals name="Out" value="1"/>
-    <eLiterals name="Nevermind" value="2"/>
+    <eLiterals name="All" value="2"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DataCondition">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="#//Action"/>
