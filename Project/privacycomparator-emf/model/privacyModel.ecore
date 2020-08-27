@@ -93,12 +93,9 @@
         eType="#//Location" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="RestrictionType">
-    <eLiterals name="DurationInMonths"/>
-    <eLiterals name="Local" value="1"/>
-    <eLiterals name="Age" value="2"/>
+    <eLiterals name="Location"/>
+    <eLiterals name="Juvenile" value="2"/>
     <eLiterals name="ExplicitConsent" value="3"/>
-    <eLiterals name="DurationInYears" value="4"/>
-    <eLiterals name="TimeInterval" value="5"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Constraint">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataOwnerScope" eType="#//ConstraintScope"/>
@@ -207,7 +204,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Restriction">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="restrictionType" eType="#//RestrictionType"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaClass"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="How">
     <eStructuralFeatures xsi:type="ecore:EReference" name="supported" upperBound="-1"
