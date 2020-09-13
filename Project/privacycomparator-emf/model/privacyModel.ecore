@@ -8,18 +8,20 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="policyStatements" upperBound="-1"
         eType="#//PolicyStatement" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="owner" eType="#//Principal"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="allData" upperBound="-1"
-        eType="#//PrivacyData" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="allPrincipals" upperBound="-1"
         eType="#//Principal" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="regions" upperBound="-1"
-        eType="#//Region" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="allProviders" upperBound="-1"
-        eType="#//Provider" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="locations" upperBound="-1"
+        eType="#//Location.1" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="defaultProtectionControls"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="allServices" upperBound="-1"
         eType="#//Service" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="defaultProtectionControls"
-        upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="allProviders" upperBound="-1"
+        eType="#//Provider" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="configurationManager" lowerBound="1"
+        eType="#//ConfigurationManager" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="allDatas" upperBound="-1"
+        eType="#//PrivacyData" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PolicyStatement" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="EReference0" eType="#//PrivacyData"/>
@@ -33,8 +35,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="who" eType="#//Principal"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="why" eType="#//Purpose"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="from" eType="#//Region"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="where" eType="#//Region"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="from" eType="#//Location.1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="where" eType="#//Location.1"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="what" eType="#//What" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="how" upperBound="-1" eType="#//How"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="whose" eType="#//Principal"/>
@@ -42,7 +44,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="cause" eType="#//PolicyStatement"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PrivacyData" eSuperTypes="#//NamedElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="restrictions" eType="#//DataConstraint"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="accessConstraints" eType="#//DataConstraint"
         eKeys="#//DataConstraint/key">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>
@@ -58,13 +60,13 @@
   <eClassifiers xsi:type="ecore:EClass" name="Provider" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="provide" upperBound="-1"
         eType="#//Service"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="located" eType="#//Region"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="located" eType="#//Location.1"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Region" eSuperTypes="#//NamedElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="subRegions" upperBound="-1"
-        eType="#//Region" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="regionType" lowerBound="1"
-        eType="#//RegionType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Location" eSuperTypes="#//NamedElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subLocations" upperBound="-1"
+        eType="#//Location" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="locationType" lowerBound="1"
+        eType="#//LocationType"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Principal" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="subPrincipals" upperBound="-1"
@@ -90,12 +92,13 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Location" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="SubLocations" upperBound="-1"
-        eType="#//Location" containment="true"/>
+        eType="#//Location.1" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isEUMember" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="RestrictionType">
-    <eLiterals name="Location"/>
-    <eLiterals name="Juvenile" value="2"/>
-    <eLiterals name="ExplicitConsent" value="3"/>
+    <eLiterals name="Juvenile"/>
+    <eLiterals name="ExplicitConsent" value="1"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Constraint">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataOwnerScope" eType="#//ConstraintScope"/>
@@ -141,14 +144,14 @@
     <eLiterals name="NotifyAboutErasure " value="6"/>
     <eLiterals name="NotifyAboutRectification" value="7"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="RegionType">
+  <eClassifiers xsi:type="ecore:EEnum" name="LocationType">
     <eLiterals name="Union" literal="Member"/>
     <eLiterals name="Country" value="1"/>
     <eLiterals name="Region" value="2"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Purpose">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="additionalProtectionControls"
-        upperBound="-1" eType="#//ProtectionControls"/>
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="processingReason" eType="#//ProcessingReason"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="processingReasonSubtype"
         eType="#//ProcessingReasonSubtype"/>
@@ -179,11 +182,6 @@
     <eLiterals name="SocialSecurity" value="9"/>
     <eLiterals name="SocialProtection" value="10"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="ProtectionControls">
-    <eLiterals name="OriginalData"/>
-    <eLiterals name="Encryption" value="1"/>
-    <eLiterals name="Pseudonymisation" value="2"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="What">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="actions" upperBound="-1"
         eType="#//Action"/>
@@ -207,11 +205,31 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="How">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="supported" upperBound="-1"
-        eType="#//Restriction"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataSource" eType="#//DataSource"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataSource" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attached" upperBound="-1"
+        eType="#//Approval"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="DataSource">
-    <eLiterals name="PubliclyAccessibleSources" literal="EEnumLiteral0"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Approval" eSuperTypes="#//Restriction">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="startDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="terminationDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="terminationExplanation"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="allowedLocations" upperBound="-1"
+        eType="#//Location.1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ProtectionControl">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="method" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConfigurationManager">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="protectionControlsMethods"
+        upperBound="-1" eType="#//ProtectionControl" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="definedDataSources" upperBound="-1"
+        eType="#//DataSource" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DataSource">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="source" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>
