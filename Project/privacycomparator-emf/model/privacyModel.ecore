@@ -22,6 +22,8 @@
         eType="#//ConfigurationManager" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="allDatas" upperBound="-1"
         eType="#//PrivacyData" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="DataSubjectComplaints"
+        upperBound="-1" eType="#//Complaint" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PolicyStatement" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="EReference0" eType="#//PrivacyData"/>
@@ -138,11 +140,9 @@
     <eLiterals name="Store"/>
     <eLiterals name="Access" value="1"/>
     <eLiterals name="Collecting" value="2"/>
-    <eLiterals name="Rectification " value="3"/>
-    <eLiterals name="Erasure" value="4"/>
-    <eLiterals name="Retrieval" value="5"/>
-    <eLiterals name="NotifyAboutErasure " value="6"/>
-    <eLiterals name="NotifyAboutRectification" value="7"/>
+    <eLiterals name="Retrieval" value="2"/>
+    <eLiterals name="NotifyAboutErasure " value="3"/>
+    <eLiterals name="NotifyAboutRectification" value="4"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="LocationType">
     <eLiterals name="Union" literal="Member"/>
@@ -215,7 +215,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="terminationDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="terminationExplanation"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="allowedLocations" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="notAllowedLocations" upperBound="-1"
         eType="#//Location.1"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ProtectionControl">
@@ -231,5 +231,17 @@
   <eClassifiers xsi:type="ecore:EClass" name="DataSource">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="source" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Complaint">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="when" lowerBound="1" eType="#//TimeInterval"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="who" lowerBound="1" eType="#//Principal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Action" eType="#//ComplaintAction"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="what" lowerBound="1" upperBound="-1"
+        eType="#//PrivacyData"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ComplaintAction">
+    <eLiterals name="Erasure"/>
+    <eLiterals name="Rectification" value="1"/>
   </eClassifiers>
 </ecore:EPackage>
