@@ -122,7 +122,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_T2XC4fW7EeqZCNI-E7w_EQ"/>
       </children>
       <children xmi:type="notation:Node" xmi:id="_KBbFEAQUEeuYHZjqrA5RQQ" type="2001">
-        <element xmi:type="ecore:EAttribute" href="privacyModel.ecore#//Location/EAttribute0"/>
+        <element xmi:type="ecore:EAttribute" href="privacyModel.ecore#//Location/type"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_KBbFEQQUEeuYHZjqrA5RQQ"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_vJesFdXNEeqE8L8F7FUqIA"/>
@@ -298,13 +298,13 @@
   <children xmi:type="notation:Node" xmi:id="_tkKOkNdCEeqw-88vaasLYg" type="1001">
     <children xmi:type="notation:Node" xmi:id="_tkK1oNdCEeqw-88vaasLYg" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_tkK1oddCEeqw-88vaasLYg" type="5001">
-      <children xmi:type="notation:Node" xmi:id="_w_3gcNdCEeqw-88vaasLYg" type="2001">
-        <element xmi:type="ecore:EAttribute" href="privacyModel.ecore#//TimeStatement/dateTime"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_w_3gcddCEeqw-88vaasLYg"/>
-      </children>
       <children xmi:type="notation:Node" xmi:id="_M0A80NdDEeqw-88vaasLYg" type="2001">
         <element xmi:type="ecore:EAttribute" href="privacyModel.ecore#//TimeStatement/preposition"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_M0A80ddDEeqw-88vaasLYg"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_7XM3UArtEeu9INAb6RVvyw" type="2001">
+        <element xmi:type="ecore:EAttribute" href="privacyModel.ecore#//TimeStatement/dateTime"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_7XM3UQrtEeu9INAb6RVvyw"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_tkK1otdCEeqw-88vaasLYg"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_tkK1o9dCEeqw-88vaasLYg"/>
@@ -698,13 +698,13 @@
   <children xmi:type="notation:Node" xmi:id="_UdT2gPWtEeqZCNI-E7w_EQ" type="1001">
     <children xmi:type="notation:Node" xmi:id="_UdW50PWtEeqZCNI-E7w_EQ" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_UdYH8PWtEeqZCNI-E7w_EQ" type="5001">
-      <children xmi:type="notation:Node" xmi:id="_wNbugPWtEeqZCNI-E7w_EQ" type="2001">
+      <children xmi:type="notation:Node" xmi:id="_SVmTcArzEeuAX_-D1oyVeA" type="2001">
         <element xmi:type="ecore:EAttribute" href="privacyModel.ecore#//Approval/startDate"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_wNbugfWtEeqZCNI-E7w_EQ"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_SVmTcQrzEeuAX_-D1oyVeA"/>
       </children>
-      <children xmi:type="notation:Node" xmi:id="_0HnsIPWtEeqZCNI-E7w_EQ" type="2001">
+      <children xmi:type="notation:Node" xmi:id="_W5RS8ArzEeuAX_-D1oyVeA" type="2001">
         <element xmi:type="ecore:EAttribute" href="privacyModel.ecore#//Approval/terminationDate"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_0HnsIfWtEeqZCNI-E7w_EQ"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_W5RS8QrzEeuAX_-D1oyVeA"/>
       </children>
       <children xmi:type="notation:Node" xmi:id="_PDrC4PWuEeqZCNI-E7w_EQ" type="2001">
         <element xmi:type="ecore:EAttribute" href="privacyModel.ecore#//Approval/terminationExplanation"/>
@@ -1344,7 +1344,7 @@
     </children>
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_ynbUgfwrEeqQWK_sEQmc3A" lineColor="4210752"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_ynbUgvwrEeqQWK_sEQmc3A" fontColor="4210752" fontName="Segoe UI" fontHeight="10"/>
-    <element xmi:type="ecore:EReference" href="privacyModel.ecore#//PrivacyPolicy/DataSubjectComplaints"/>
+    <element xmi:type="ecore:EReference" href="privacyModel.ecore#//PrivacyPolicy/dataSubjectComplaints"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_ynbUg_wrEeqQWK_sEQmc3A" points="[4, 10, -105, -235]$[101, 226, -8, -19]"/>
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_yneX0PwrEeqQWK_sEQmc3A" id="(0.6103896103896104,0.7843137254901961)"/>
   </edges>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ASCII"?>
+<privacymodel:PrivacyPolicy
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:privacymodel="http://privacymodel/1.0"
+    xsi:schemaLocation="http://privacymodel/1.0 privacyModel.ecore"
+    name="Policy">
+  <policyStatements
+      name="p1">
+    <when>
+      <intervals
+          dateTime="2002-09-27T00:00:00.000+0200"/>
+      <intervals
+          preposition="to"
+          dateTime="2002-09-30T00:00:00.000+0200"/>
+    </when>
+    <what/>
+  </policyStatements>
+  <policyStatements
+      name="p2">
+    <what/>
+  </policyStatements>
+  <allPrincipals
+      name="Tijana"
+      type="Group"/>
+  <allPrincipals
+      name="Tijana"/>
+  <configurationManager/>
+</privacymodel:PrivacyPolicy>

@@ -1,10 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="privacymodel" nsURI="http://privacymodel/1.0" nsPrefix="privacymodel">
+  <eAnnotations source="http://www.eclipse.org/OCL/Import">
+    <details key="ecore" value="http://www.eclipse.org/emf/2002/Ecore#/"/>
+  </eAnnotations>
+  <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+    <details key="invocationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="settingDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="validationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+  </eAnnotations>
   <eClassifiers xsi:type="ecore:EClass" name="NamedElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PrivacyPolicy" eSuperTypes="#//NamedElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="EmptyPrivacyPolicyName UniquePolicyStatementName UniquePrincipalNamePerType UniquePrivacyDataName UniqueLocationPerType"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="EmptyPrivacyPolicyName" value="&#xA;&#x9;&#x9;&#x9;self.name.size() > 0"/>
+      <details key="EmptyPrivacyPolicyName$message" value="'PrivacyPolicy name cannot be empty'"/>
+      <details key="UniquePolicyStatementName" value="&#xA;&#x9;&#x9;&#x9;self.policyStatements->forAll(st1:PolicyStatement,st2:PolicyStatement| st1.name = st2.name implies st1 = st2)"/>
+      <details key="UniquePolicyStatementName$message" value="'PolicyStatement name is unique'"/>
+      <details key="UniquePrincipalNamePerType" value="&#xA;&#x9;&#x9;self.allPrincipals->forAll(pr1:Principal,pr2:Principal| &#xA;&#x9;&#x9;&#x9;if(pr1.type = pr2.type) then &#xA;&#x9;&#x9;&#x9;pr1.name = pr2.name implies pr1 = pr2&#xA;&#x9;&#x9;&#x9;else&#xA;&#x9;&#x9;&#x9;&#x9;true&#xA;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;)"/>
+      <details key="UniquePrincipalNamePerType$message" value="'Principal name per type is unique'"/>
+      <details key="UniquePrivacyDataName" value="&#xA;&#x9;&#x9;self.allDatas->forAll(data1:PrivacyData,data2:PrivacyData| data1.name = data2.name implies data1 = data2)"/>
+      <details key="UniquePrivacyDataName$message" value="'PrivacyData name is unique'"/>
+      <details key="UniqueLocationPerType" value="&#xA;&#x9;&#x9;self.locations->forAll(loc1:Location,loc2:Location| &#xA;&#x9;&#x9;&#x9;if(loc1.type = loc2.type) then &#xA;&#x9;&#x9;&#x9;&#x9;loc1.name = loc2.name implies loc1 = loc2&#xA;&#x9;&#x9;&#x9;else&#xA;&#x9;&#x9;&#x9;&#x9;true&#xA;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;)"/>
+      <details key="UniqueLocationPerType$message" value="'Location name per type is unique'"/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="policyStatements" upperBound="-1"
         eType="#//PolicyStatement" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="owner" eType="#//Principal"/>
@@ -22,10 +45,19 @@
         eType="#//ConfigurationManager" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="allDatas" upperBound="-1"
         eType="#//PrivacyData" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="DataSubjectComplaints"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dataSubjectComplaints"
         upperBound="-1" eType="#//Complaint" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PolicyStatement" eSuperTypes="#//NamedElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="EmptyPolicyStatementName DataExchangeProhibited"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="EmptyPolicyStatementName" value="&#xA;&#x9;&#x9;&#x9;self.name.size() > 0"/>
+      <details key="EmptyPolicyStatementName$message" value="'PolicyStatement name cannot be empty'"/>
+      <details key="DataExchangeProhibited" value="&#xA;&#x9;&#x9;&#x9;self.what.datas->&#xA;&#x9;&#x9;&#x9;forAll(whatData:PrivacyData|&#xA;&#x9;&#x9;&#x9;&#x9;PrivacyPolicy.allInstances()->asSequence()->first().allDatas->&#xA;&#x9;&#x9;&#x9;&#x9;forAll(data:PrivacyData|&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;if(whatData.name = data.name) then&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;self.what.actions -> forAll(act:Action|&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;data.accessConstraints->forAll(constraint:DataConstraint|&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;if(constraint.key = act) then&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;false&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;else &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;true&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;else&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;true&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;&#x9;&#x9;)&#xA;&#x9;&#x9;&#x9;)"/>
+      <details key="DataExchangeProhibited$message" value="'Exchange of data with this Provider is prohibited becouse of location'"/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="EReference0" eType="#//PrivacyData"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//PrivacyStatementType"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="when" eType="#//TimeInterval"
@@ -39,33 +71,64 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="from" eType="#//Location"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="where" eType="#//Location"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="what" eType="#//What" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="what" lowerBound="1" eType="#//What"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="how" upperBound="-1" eType="#//How"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="whose" eType="#//Principal"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="whom" upperBound="-1" eType="#//Principal"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="cause" eType="#//PolicyStatement"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PrivacyData" eSuperTypes="#//NamedElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="accessConstraints" eType="#//DataConstraint"
-        eKeys="#//DataConstraint/key">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="EmptyPrivacyDataName"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="EmptyPrivacyDataName" value="&#xA;&#x9;&#x9;&#x9;self.name.size() > 0"/>
+      <details key="EmptyPrivacyDataName$message" value="'PrivacyData name cannot be empty'"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="accessConstraints" upperBound="-1"
+        eType="#//DataConstraint" eKeys="#//DataConstraint/key">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>
         <details key="processing" value="skip"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//DataType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//DataType"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Service" eSuperTypes="#//NamedElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="EmptyServiceName"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="EmptyServiceName" value="&#xA;&#x9;&#x9;&#x9;self.name.size() > 0"/>
+      <details key="EmptyServiceName$message" value="'Service name cannot be empty'"/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="subservices" upperBound="-1"
         eType="#//Service" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Provider" eSuperTypes="#//NamedElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="EmptyProviderName"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="EmptyProviderName" value="&#xA;&#x9;&#x9;&#x9;self.name.size() > 0"/>
+      <details key="EmptyProviderName$message" value="'Provider name cannot be empty'"/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="provide" upperBound="-1"
         eType="#//Service"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="located" lowerBound="1"
         eType="#//Location"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Principal" eSuperTypes="#//NamedElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="EmptyPrincipalName UniquePrincipalNamePerType"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="EmptyPrincipalName" value="&#xA;&#x9;&#x9;&#x9;self.name.size() > 0"/>
+      <details key="EmptyPrincipalName$message" value="'Principal name cannot be empty'"/>
+      <details key="UniquePrincipalNamePerType" value="&#xA;&#x9;&#x9;self.subPrincipals->forAll(pr1:Principal,pr2:Principal| &#xA;&#x9;&#x9;&#x9;if(pr1.type = pr2.type) then &#xA;&#x9;&#x9;&#x9;pr1.name = pr2.name implies pr1 = pr2&#xA;&#x9;&#x9;&#x9;else&#xA;&#x9;&#x9;&#x9;&#x9;true&#xA;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;)"/>
+      <details key="UniquePrincipalNamePerType$message" value="'Principal name per type is unique'"/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="subPrincipals" upperBound="-1"
         eType="#//Principal" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//PrincipalType"/>
@@ -74,12 +137,12 @@
   <eClassifiers xsi:type="ecore:EEnum" name="PrivacyStatementType">
     <eLiterals name="Permission"/>
     <eLiterals name="Obligation" value="1"/>
-    <eLiterals name="Information" value="2" literal="Information"/>
+    <eLiterals name="Information" value="2"/>
     <eLiterals name="Optional" value="3"/>
     <eLiterals name="Prohibition" value="4"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="DataType">
-    <eLiterals name="Biometric" literal="Biometric"/>
+    <eLiterals name="Biometric"/>
     <eLiterals name="General" value="1"/>
     <eLiterals name="Genetic" value="2"/>
     <eLiterals name="PoliticalOpinion" value="3"/>
@@ -88,10 +151,16 @@
     <eLiterals name="SexLife" value="6"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Location" eSuperTypes="#//NamedElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="EmptyLocationName"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="EmptyLocationName" value="&#xA;&#x9;&#x9;&#x9;self.name.size() > 0"/>
+      <details key="EmptyLocationName$message" value="'Location name cannot be empty'"/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isEUMember" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="EAttribute0" lowerBound="1"
-        eType="#//LocationType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//LocationType"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="subLocations" upperBound="-1"
         eType="#//Location"/>
   </eClassifiers>
@@ -107,13 +176,27 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataRecipientScope" eType="#//ConstraintScope"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TimeInterval">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="intervals" upperBound="-1"
-        eType="#//TimeStatement" containment="true"/>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="OnlyBeforeOrBeforeWithAfter OnlyAfterOrAfterWithBefore OnlyFromOrFromWithTo OnlyToOrToWithFrom"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="OnlyBeforeOrBeforeWithAfter" value="&#xA;&#x9;&#x9;&#x9;self.intervals->forAll(tsBefore:TimeStatement| &#xA;&#x9;&#x9;&#x9;&#x9;if(tsBefore.preposition = TimePreposition::before) then&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;if(self.intervals->size() = 2) then&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;self.intervals->exists(interval| interval.preposition = TimePreposition::after)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;else if(self.intervals->size() > 2) then&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;false&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;else&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;true&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;&#x9;&#x9;else&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;true&#xA;&#x9;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;&#x9;)"/>
+      <details key="OnlyBeforeOrBeforeWithAfter$message" value="'Before interval should be alone or with after interval'"/>
+      <details key="OnlyAfterOrAfterWithBefore" value="&#xA;&#x9;&#x9;&#x9;self.intervals->forAll(tsBefore:TimeStatement| &#xA;&#x9;&#x9;&#x9;&#x9;if(tsBefore.preposition = TimePreposition::after) then&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;if(self.intervals->size() = 2) then&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;self.intervals->exists(interval| interval.preposition = TimePreposition::before)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;else if(self.intervals->size() > 2) then&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;false&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;else&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;true&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;&#x9;&#x9;else&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;true&#xA;&#x9;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;&#x9;)"/>
+      <details key="OnlyAfterOrAfterWithBefore$message" value="'After interval should be alone or with before interval'"/>
+      <details key="OnlyFromOrFromWithTo" value="&#xA;&#x9;&#x9;&#x9;self.intervals->forAll(tsBefore:TimeStatement| &#xA;&#x9;&#x9;&#x9;&#x9;if(tsBefore.preposition = TimePreposition::from) then&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;if(self.intervals->size() = 2) then&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;self.intervals->exists(interval| interval.preposition = TimePreposition::to)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;else if(self.intervals->size() > 2) then&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;false&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;else&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;true&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;&#x9;&#x9;else&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;true&#xA;&#x9;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;&#x9;)"/>
+      <details key="OnlyFromOrFromWithTo$message" value="'From interval should be alone or with to interval'"/>
+      <details key="OnlyToOrToWithFrom" value="&#xA;&#x9;&#x9;&#x9;&#x9;self.intervals->forAll(tsBefore:TimeStatement| &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;if(tsBefore.preposition = TimePreposition::to) then&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;if(self.intervals->size() = 2) then&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;self.intervals->exists(interval| interval.preposition = TimePreposition::from)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;else if(self.intervals->size() > 2) then&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;false&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;else&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;true&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;else&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;true&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;&#x9;&#x9;)"/>
+      <details key="OnlyToOrToWithFrom$message" value="'To interval should be alone or with from interval'"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="intervals" lowerBound="1"
+        upperBound="-1" eType="#//TimeStatement" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TimeStatement">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dateTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="preposition" lowerBound="1"
         eType="#//TimePreposition"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dateTime" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="TimePreposition">
     <eLiterals name="from"/>
@@ -142,7 +225,7 @@
     <eLiterals name="NotifyAboutRectification" value="4"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="LocationType">
-    <eLiterals name="Union" literal="Member"/>
+    <eLiterals name="Union"/>
     <eLiterals name="Country" value="1"/>
     <eLiterals name="Region" value="2"/>
   </eClassifiers>
@@ -193,7 +276,7 @@
     <eLiterals name="All" value="2"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DataConstraint">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="#//Action"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" lowerBound="1" eType="#//Action"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" upperBound="-1"
         eType="#//Constraint"/>
   </eClassifiers>
@@ -208,12 +291,12 @@
         eType="#//Approval"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Approval" eSuperTypes="#//Restriction">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="startDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="terminationDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="terminationExplanation"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="notAllowed" upperBound="-1"
         eType="#//Location"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="startDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="terminationDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ProtectionControl">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="method" lowerBound="1"
