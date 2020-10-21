@@ -7,7 +7,9 @@
     xsi:schemaLocation="http://privacymodel/1.0 privacyModel.ecore"
     name="Policy">
   <policyStatements
-      name="p1">
+      name="p1"
+      whose="//@allPrincipals.0"
+      causedBy="//@dataSubjectComplaints.0">
     <when>
       <intervals
           dateTime="2002-09-27T00:00:00.000+0200"/>
@@ -15,16 +17,61 @@
           preposition="to"
           dateTime="2002-09-30T00:00:00.000+0200"/>
     </when>
-    <what/>
+    <what datas="//@allDatas.0">
+      <actions>NotifyAboutErasure</actions>
+      <actions>Access</actions>
+    </what>
   </policyStatements>
   <policyStatements
       name="p2">
-    <what/>
+    <what datas="//@allDatas.0">
+      <actions>Store</actions>
+    </what>
+    <how dataSource="test"/>
+  </policyStatements>
+  <policyStatements
+      name="p3"
+      causedBy="//@dataSubjectComplaints.1">
+    <what datas="//@allDatas.1">
+      <actions>NotifyAboutRectification</actions>
+    </what>
   </policyStatements>
   <allPrincipals
       name="Tijana"
       type="Group"/>
   <allPrincipals
-      name="Tijana"/>
+      name="TijanaOrg"/>
+  <locations
+      name="Serbia"/>
+  <locations
+      name="Madjarska"
+      isEUMember="true"/>
+  <allProviders
+      name="Pera"
+      located="//@locations.0"/>
   <configurationManager/>
+  <allDatas
+      name="hight">
+    <accessConstraints>
+      <value
+          dataControllerScope="All">
+        <required
+            notAllowed="//@locations.0"/>
+      </value>
+    </accessConstraints>
+  </allDatas>
+  <allDatas
+      name="weight"/>
+  <dataSubjectComplaints
+      who="//@allPrincipals.0"
+      what="//@allDatas.0">
+    <when>
+      <intervals
+          dateTime="2002-09-27T00:00:00.000+0200"/>
+    </when>
+  </dataSubjectComplaints>
+  <dataSubjectComplaints
+      who="//@allPrincipals.1"
+      action="Rectification"
+      what="//@allDatas.1"/>
 </privacymodel:PrivacyPolicy>

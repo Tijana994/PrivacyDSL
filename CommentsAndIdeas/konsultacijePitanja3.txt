@@ -1,0 +1,7 @@
+Da li NamedElement da ima neki gid ipak?
+
+Videti za Approval da li da se cuva ovako.
+Da li mozda podatak da bude jedan u what? Kao i akcija...
+PrivacyStatementType da li mi sad stvarno treba, buduci da smo zalbe pokrili one bi bile kao nekakva zabrana? Nisam ih za sada koristila pri validaciji
+Dodala sam causedBy vezu, cause mislim da treba da obrisemo, ali moram jos da razmislim
+Kardinalitete mozda da namestim na 1 za Complaint sto se tice privacyData i dodati neki komentar

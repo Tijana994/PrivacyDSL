@@ -9,6 +9,7 @@
     <details key="settingDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
     <details key="validationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
   </eAnnotations>
+  <eClassifiers xsi:type="ecore:EDataType" name="Date" instanceClassName="java.util.Date"/>
   <eClassifiers xsi:type="ecore:EClass" name="NamedElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
@@ -50,15 +51,22 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PolicyStatement" eSuperTypes="#//NamedElement">
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
-      <details key="constraints" value="EmptyPolicyStatementName DataExchangeProhibited"/>
+      <details key="constraints" value="EmptyPolicyStatementName ComplaintExistsOnPrivacyData DataExchangeProhibited MissingApprovalForActionOnPrivacyData ShouldDefineCauseByForNotifyErasure ShouldDefineCauseByForNotifyAboutRectification"/>
     </eAnnotations>
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
       <details key="EmptyPolicyStatementName" value="&#xA;&#x9;&#x9;&#x9;self.name.size() > 0"/>
       <details key="EmptyPolicyStatementName$message" value="'PolicyStatement name cannot be empty'"/>
-      <details key="DataExchangeProhibited" value="&#xA;&#x9;&#x9;&#x9;self.what.datas->&#xA;&#x9;&#x9;&#x9;forAll(whatData:PrivacyData|&#xA;&#x9;&#x9;&#x9;&#x9;PrivacyPolicy.allInstances()->asSequence()->first().allDatas->&#xA;&#x9;&#x9;&#x9;&#x9;forAll(data:PrivacyData|&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;if(whatData.name = data.name) then&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;self.what.actions -> forAll(act:Action|&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;data.accessConstraints->forAll(constraint:DataConstraint|&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;if(constraint.key = act) then&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;false&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;else &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;true&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;else&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;true&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;&#x9;&#x9;)&#xA;&#x9;&#x9;&#x9;)"/>
-      <details key="DataExchangeProhibited$message" value="'Exchange of data with this Provider is prohibited becouse of location'"/>
+      <details key="ComplaintExistsOnPrivacyData" value="&#xA;&#x9;&#x9;PrivacyPolicy.allInstances()->asSequence()->first().dataSubjectComplaints->&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;forAll(complaint:Complaint|&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;if(complaint.what->includes(self.what.datas)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;and &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;(not(complaint.action = ComplaintAction::Erasure and self.what.actions->exists(Action::NotifyAboutErasure))&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;or&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9; not(complaint.action = ComplaintAction::Rectification and self.what.actions->exists(Action::NotifyAboutRectification)))&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;)then&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;false&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;else&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;true&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;)"/>
+      <details key="ComplaintExistsOnPrivacyData$message" value="'Complaint on this privacy data already exists.'"/>
+      <details key="DataExchangeProhibited" value="&#xA;&#x9;&#x9;&#x9;self.what.providers->forAll(provider:Provider|&#xA;&#x9;&#x9;&#x9;&#x9;self.what.datas->&#xA;&#x9;&#x9;&#x9;&#x9;forAll(whatData:PrivacyData|&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;PrivacyPolicy.allInstances()->asSequence()->first().allDatas->&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;forAll(data:PrivacyData|&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;if(whatData.name = data.name) then&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;self.what.actions -> forAll(act:Action|&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;data.accessConstraints->forAll(dataconstraint:DataConstraint|&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;if(dataconstraint.key = act) then&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;dataconstraint.value->select(c|c.dataControllerScope = ConstraintScope::All)->asSequence()&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;->forAll(r:Restriction| &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;r.notAllowed->excludes(provider.located)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;else &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;true&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;else&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;true&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;)&#xA;&#x9;&#x9;&#x9;&#x9;)&#xA;&#x9;&#x9;&#x9;)"/>
+      <details key="DataExchangeProhibited$message" value="'Exchange of data with this Provider is prohibited because of location'"/>
+      <details key="MissingApprovalForActionOnPrivacyData" value="&#xA;&#x9;&#x9;&#x9;&#x9;self.what.datas->&#xA;&#x9;&#x9;&#x9;&#x9;forAll(whatData:PrivacyData|&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;PrivacyPolicy.allInstances()->asSequence()->first().allDatas->&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;forAll(data:PrivacyData|&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;if(whatData.name = data.name) then&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;self.what.actions -> forAll(act:Action|&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;data.accessConstraints->forAll(dataconstraint:DataConstraint|&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;if(dataconstraint.key = act) then&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;dataconstraint.value->select(c|c.dataControllerScope = ConstraintScope::All)->asSequence()&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;->forAll(r:Restriction| &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;if(self.how.attached->size()> 0 and self.how.attached->exists(ap|ap.restrictionType = r.restrictionType)) then&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;true&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;else&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;false&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;else &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;true&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;else&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;true&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;)&#xA;&#x9;&#x9;&#x9;&#x9;)"/>
+      <details key="MissingApprovalForActionOnPrivacyData$message" value="'This action requires approval'"/>
+      <details key="ShouldDefineCauseByForNotifyErasure" value="&#xA;&#x9;&#x9;&#x9;self.what.actions->forAll(action:Action|&#xA;&#x9;&#x9;&#x9;&#x9;if(action = Action::NotifyAboutErasure) then&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;if(self.causedBy.action = ComplaintAction::Erasure and &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;self.what.datas->includes(self.causedBy.what) and &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;self.whose = self.causedBy.who&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;) then&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;true&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;else&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;true&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;&#x9;&#x9;else&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;true&#xA;&#x9;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;&#x9;)"/>
+      <details key="ShouldDefineCauseByForNotifyErasure$message" value="'Acton NotifyAboutErasure should contain causedBy with complaint Erasure'"/>
+      <details key="ShouldDefineCauseByForNotifyAboutRectification" value="&#xA;&#x9;&#x9;&#x9;self.what.actions->forAll(action:Action|&#xA;&#x9;&#x9;&#x9;&#x9;if(action = Action::NotifyAboutRectification) then&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;if(self.causedBy.action = ComplaintAction::Rectification and &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;self.what.datas->includes(self.causedBy.what) and &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;self.whose = self.causedBy.who&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;) then&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;true&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;else&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;true&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;&#x9;&#x9;else&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;true&#xA;&#x9;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;&#x9;)"/>
+      <details key="ShouldDefineCauseByForNotifyAboutRectification$message" value="'Acton NotifyAboutRectification should contain causedBy with complaint Rectification'"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="EReference0" eType="#//PrivacyData"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//PrivacyStatementType"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="when" eType="#//TimeInterval"
         containment="true">
@@ -73,10 +81,12 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="where" eType="#//Location"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="what" lowerBound="1" eType="#//What"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="how" upperBound="-1" eType="#//How"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="how" upperBound="-1" eType="#//How"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="whose" eType="#//Principal"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="whom" upperBound="-1" eType="#//Principal"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="cause" eType="#//PolicyStatement"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="causedBy" eType="#//Complaint"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PrivacyData" eSuperTypes="#//NamedElement">
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
@@ -87,7 +97,7 @@
       <details key="EmptyPrivacyDataName$message" value="'PrivacyData name cannot be empty'"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="accessConstraints" upperBound="-1"
-        eType="#//DataConstraint" eKeys="#//DataConstraint/key">
+        eType="#//DataConstraint" containment="true" eKeys="#//DataConstraint/key">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>
         <details key="processing" value="skip"/>
@@ -172,7 +182,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataOwnerScope" eType="#//ConstraintScope"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataControllerScope" eType="#//ConstraintScope"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="required" upperBound="-1"
-        eType="#//Restriction"/>
+        eType="#//Restriction" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataRecipientScope" eType="#//ConstraintScope"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TimeInterval">
@@ -196,7 +206,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="preposition" lowerBound="1"
         eType="#//TimePreposition"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dateTime" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+        eType="#//Date"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="TimePreposition">
     <eLiterals name="from"/>
@@ -278,25 +288,29 @@
   <eClassifiers xsi:type="ecore:EClass" name="DataConstraint">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" lowerBound="1" eType="#//Action"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" upperBound="-1"
-        eType="#//Constraint"/>
+        eType="#//Constraint" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Restriction">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="restrictionType" eType="#//RestrictionType"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="notAllowed" upperBound="-1"
+        eType="#//Location"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="How">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataSource" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="attached" upperBound="-1"
-        eType="#//Approval"/>
+        eType="#//Approval" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Approval" eSuperTypes="#//Restriction">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="terminationExplanation"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="notAllowed" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="allowed" upperBound="-1"
         eType="#//Location"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="startDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="terminationDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="startDate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="terminationDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="startDate" eType="#//Date"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="terminationDate" eType="#//Date"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ProtectionControl">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="method" lowerBound="1"
@@ -316,7 +330,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="when" lowerBound="1" eType="#//TimeInterval"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="who" lowerBound="1" eType="#//Principal"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Action" eType="#//ComplaintAction"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="action" eType="#//ComplaintAction"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="what" lowerBound="1" upperBound="-1"
         eType="#//PrivacyData"/>
   </eClassifiers>
